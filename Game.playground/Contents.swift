@@ -57,7 +57,6 @@ class Jedi: Unit {
     
     // Есть также небольшой шанс на двойную атаку
     override func attack(to enemy: Unit) {
-        print("attacking in a jedi way")
         if Double.random(in: 0..<100) > 95 {
             super.attack(to: enemy)
             super.attack(to: enemy)
