@@ -42,8 +42,8 @@ class Weeb: Unit {
     // У анимешника снижена защита, но увеличена ловкость
     override init(nickname: String) {
         super.init(nickname: nickname)
-        self.defense *= 0.75
-        self.agility *= 1.5
+        defense *= 0.75
+        agility *= 1.5
     }
 }
 
@@ -51,8 +51,8 @@ class Defender: Unit {
     // У защитника больше защиты и хп
     override init(nickname: String) {
         super.init(nickname: nickname)
-        self.defense *= 2
-        self.hp *= 2
+        defense *= 2
+        hp *= 2
     }
 }
 
@@ -60,11 +60,11 @@ class Jedi: Unit {
     // У джедая снижена защита и хп, но серьезно увеличена ловкость и урон
     override init(nickname: String) {
         super.init(nickname: nickname)
-        self.defense *= 0.5
-        self.hp *= 0.7
-        self.agility *= 1.5
-        self.damage *= 1.5
-        self.strength *= 1.25
+        defense *= 0.5
+        hp *= 0.7
+        agility *= 1.5
+        damage *= 1.5
+        strength *= 1.25
     }
     
     // Есть также небольшой шанс на двойную атаку
@@ -83,10 +83,10 @@ class ChuckNorris: Unit {
     // У Чака много хп и дамага, но шанс увернуться практически отсутствует
     override init(nickname: String) {
         super.init(nickname: nickname)
-        self.hp *= 1.75
-        self.damage *= 2
-        self.agility *= 0.1
-        self.strength *= 1.5
+        hp *= 1.75
+        damage *= 2
+        agility *= 0.1
+        strength *= 1.5
     }
 }
 
