@@ -8,6 +8,7 @@ class Unit {
     var strength: Double
     var nickname: String
     
+    // if any customization is needed
     init(hp: Double, damage: Double, defense: Double, agility: Double, strength: Double, nickname: String) {
         self.hp = hp
         self.damage = damage
@@ -16,6 +17,17 @@ class Unit {
         self.strength = strength
         self.nickname = nickname
     }
+    
+    // default initializer
+    init(nickname: String) {
+        hp = 100
+        damage = 100
+        defense = 10
+        agility = 10
+        strength = 10
+        self.nickname = nickname
+    }
+    
     func attack(to enemy: Unit) {
         let damage = self.damage * (1 + strength/100)
         var reducedDamage = damage * (1 - enemy.defense/100)
@@ -28,8 +40,8 @@ class Unit {
 
 class Weeb: Unit {
     // У анимешника снижена защита, но увеличена ловкость
-    override init(hp: Double, damage: Double, defense: Double, agility: Double, strength: Double, nickname: String) {
-        super.init(hp: hp, damage: damage, defense: defense, agility: agility, strength: strength, nickname: nickname)
+    override init(nickname: String) {
+        super.init(nickname: nickname)
         self.defense *= 0.75
         self.agility *= 1.5
     }
@@ -37,8 +49,8 @@ class Weeb: Unit {
 
 class Defender: Unit {
     // У защитника больше защиты и хп
-    override init(hp: Double, damage: Double, defense: Double, agility: Double, strength: Double, nickname: String) {
-        super.init(hp: hp, damage: damage, defense: defense, agility: agility, strength: strength, nickname: nickname)
+    override init(nickname: String) {
+        super.init(nickname: nickname)
         self.defense *= 2
         self.hp *= 2
     }
@@ -46,8 +58,8 @@ class Defender: Unit {
 
 class Jedi: Unit {
     // У джедая снижена защита и хп, но серьезно увеличена ловкость и урон
-    override init(hp: Double, damage: Double, defense: Double, agility: Double, strength: Double, nickname: String) {
-        super.init(hp: hp, damage: damage, defense: defense, agility: agility, strength: strength, nickname: nickname)
+    override init(nickname: String) {
+        super.init(nickname: nickname)
         self.defense *= 0.5
         self.hp *= 0.7
         self.agility *= 1.5
@@ -69,8 +81,8 @@ class Jedi: Unit {
 
 class ChuckNorris: Unit {
     // У Чака много хп и дамага, но шанс увернуться практически отсутствует
-    override init(hp: Double, damage: Double, defense: Double, agility: Double, strength: Double, nickname: String) {
-        super.init(hp: hp, damage: damage, defense: defense, agility: agility, strength: strength, nickname: nickname)
+    override init(nickname: String) {
+        super.init(nickname: nickname)
         self.hp *= 1.75
         self.damage *= 2
         self.agility *= 0.1
@@ -116,15 +128,15 @@ class ZonaArea {
                 for _ in 0..<numberOfReinforcements {
                     let random = Int.random(in: 0..<10)
                     if random <= 5 {
-                        attackersMutable.append(Weeb(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Weeb_\(uniqueId)"))
+                        attackersMutable.append(Weeb(nickname: "Weeb_\(uniqueId)"))
                         uniqueId += 1
                     }
                     else if random > 5 && random < 8 {
-                        attackersMutable.append(Jedi(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Jedi_\(uniqueId)"))
+                        attackersMutable.append(Jedi(nickname: "Jedi_\(uniqueId)"))
                         uniqueId += 1
                     }
                     else {
-                        attackersMutable.append(ChuckNorris(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Chuck_\(uniqueId)"))
+                        attackersMutable.append(ChuckNorris(nickname: "Chuck_\(uniqueId)"))
                         uniqueId += 1
                     }
                 }
@@ -139,27 +151,27 @@ class ZonaArea {
 var attackers = [Unit]()
 var defenders = [Unit]()
 
-attackers.append(Weeb(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Weeb1"))
-attackers.append(Weeb(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Weeb2"))
-attackers.append(Weeb(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Weeb3"))
-attackers.append(Weeb(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Weeb4"))
-attackers.append(Weeb(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Weeb5"))
-attackers.append(Weeb(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Weeb6"))
-attackers.append(Weeb(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Weeb7"))
-attackers.append(Jedi(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Jedi1"))
-attackers.append(Jedi(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Jedi2"))
-attackers.append(Jedi(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Jedi3"))
+attackers.append(Weeb(nickname: "Weeb1"))
+attackers.append(Weeb(nickname: "Weeb2"))
+attackers.append(Weeb(nickname: "Weeb3"))
+attackers.append(Weeb(nickname: "Weeb4"))
+attackers.append(Weeb(nickname: "Weeb5"))
+attackers.append(Weeb(nickname: "Weeb6"))
+attackers.append(Weeb(nickname: "Weeb7"))
+attackers.append(Jedi(nickname: "Jedi1"))
+attackers.append(Jedi(nickname: "Jedi2"))
+attackers.append(Jedi(nickname: "Jedi3"))
 
-defenders.append(Defender(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Defender1"))
-defenders.append(Defender(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Defender2"))
-defenders.append(Defender(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Defender3"))
-defenders.append(Defender(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Defender4"))
-defenders.append(Defender(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Defender5"))
-defenders.append(Defender(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Defender6"))
-defenders.append(Defender(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Defender7"))
-defenders.append(Defender(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Defender8"))
-defenders.append(Defender(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Defender9"))
-defenders.append(Defender(hp: 100, damage: 100, defense: 10, agility: 10, strength: 10, nickname: "Defender10"))
+defenders.append(Defender(nickname: "Defender1"))
+defenders.append(Defender(nickname: "Defender2"))
+defenders.append(Defender(nickname: "Defender3"))
+defenders.append(Defender(nickname: "Defender4"))
+defenders.append(Defender(nickname: "Defender5"))
+defenders.append(Defender(nickname: "Defender6"))
+defenders.append(Defender(nickname: "Defender7"))
+defenders.append(Defender(nickname: "Defender8"))
+defenders.append(Defender(nickname: "Defender9"))
+defenders.append(Defender(nickname: "Defender10"))
 
-ZonaArea.beginBattle(with: attackers, and: defenders, wave: 10)
+ZonaArea.beginBattle(with: attackers, and: defenders, wave: 4)
 
