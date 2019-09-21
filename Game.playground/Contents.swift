@@ -129,16 +129,14 @@ class ZonaArea {
                     let random = Int.random(in: 0..<10)
                     if random <= 5 {
                         attackersMutable.append(Weeb(nickname: "Weeb_\(uniqueId)"))
-                        uniqueId += 1
                     }
                     else if random > 5 && random < 8 {
                         attackersMutable.append(Jedi(nickname: "Jedi_\(uniqueId)"))
-                        uniqueId += 1
                     }
                     else {
                         attackersMutable.append(ChuckNorris(nickname: "Chuck_\(uniqueId)"))
-                        uniqueId += 1
                     }
+                    uniqueId += 1
                 }
             }
         }
