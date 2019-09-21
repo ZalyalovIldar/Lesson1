@@ -12,25 +12,27 @@ import UIKit
  
 */
 
-class Unit{
-    var health : Int!
-    var armor : Int!
-    var damage : Int!
-    var name : String!
+class Unit {
     
-    func attack(target : Unit) {
+    var health: Int!
+    var armor: Int!
+    var damage: Int!
+    var name: String!
+    
+    func attack(target: Unit) {
         target.takeDamage(amountOfDamage: self.damage!)
     }
     
-    func takeDamage(amountOfDamage : Int) {
+    func takeDamage(amountOfDamage: Int) {
         var damage = amountOfDamage - self.armor!
-        if damage>0{
-            self.health-=damage
+        if damage > 0 {
+            health -= damage
         }
     }
 }
 
-class Kyle : Unit{
+class Kyle: Unit {
+    
     override init() {
         super.init()
         self.health = 20
@@ -40,7 +42,8 @@ class Kyle : Unit{
     }
 }
 
-class NarutoRunner : Unit{
+class NarutoRunner: Unit {
+    
     override init() {
         super.init()
         self.health = 5
@@ -50,7 +53,8 @@ class NarutoRunner : Unit{
     }
 }
 
-class RockThrower : Unit{
+class RockThrower: Unit {
+    
     override init() {
         super.init()
         self.health = 10
@@ -60,7 +64,8 @@ class RockThrower : Unit{
     }
 }
 
-class Zone51Guardian : Unit{
+class Zone51Guardian: Unit {
+    
     override init() {
         super.init()
         self.health = 100
@@ -75,66 +80,68 @@ var waveCounter = 1
 =================*/
 var guardianCounter = 10
 var kyleCounter = 9
-var narutorunnerCounter = 15
-var rockthrowerCounter = 5
+var narutoRunnerCounter = 15
+var rockThrowerCounter = 5
 
-var guardianArray : [Unit] = []
-var attackerArray : [Unit] = []
+var guardianArray: [Unit] = []
+var attackerArray: [Unit] = []
 
-func guardiansFactory() -> [Unit]{
-    for _ in 1..<guardianCounter {
+func guardiansFactory() -> [Unit] {
+    
+    for _ in 0 ..< guardianCounter {
         guardianArray.append(Zone51Guardian())
     }
     
     return guardianArray
 }
 
-func attackersFactory() -> [Unit]{
+func attackersFactory() -> [Unit] {
     
     attackerArray.removeAll()
     
-    for _ in 1..<narutorunnerCounter {
+    for _ in 0 ..< narutoRunnerCounter {
         attackerArray.append(NarutoRunner())
     }
     
-    for _ in 1..<kyleCounter {
+    for _ in 0 ..< kyleCounter {
         attackerArray.append(Kyle())
     }
     
-    for _ in 1..<rockthrowerCounter {
+    for _ in 0 ..< rockThrowerCounter {
         attackerArray.append(RockThrower())
     }
     
     return attackerArray
 }
 
-class ZonaArea{
+class ZonaArea {
+    
     func beginBattle(with attackers: [Unit] = attackersFactory(), guardians: [Unit] = guardiansFactory(), wave: Int = waveCounter) {
-        repeat{
-            repeat{
+        repeat {
+            repeat {
                 for guardian in guardianArray {
                     for attacker in attackerArray {
                         
                         guardian.attack(target: attacker)
-                        if attacker.health<=0{
-                            attackerArray.remove(at: attackerArray.firstIndex{$0 === attacker}!)
+                        if attacker.health <= 0, let attackerToRemove = attackerArray.firstIndex(where: { $0 === attacker }) {
+                            attackerArray.remove(at: attackerToRemove)
                             continue
                         }
                         
                         attacker.attack(target: guardian)
-                        if guardian.health<=0{
-                           guardianArray.remove(at: guardianArray.firstIndex{$0 === guardian}!)
+                        if guardian.health <= 0, let guardianToRemove = guardianArray.firstIndex(where: { $0 === guardian }) {
+                           guardianArray.remove(at: guardianToRemove)
                            break
                         }
                     }
                 }
-            } while guardianArray.count != 0 && attackerArray.count != 0
+            } while !guardianArray.isEmpty && !attackerArray.isEmpty
         
             if guardianArray.count != 0 {
             waveCounter += 1
-            narutorunnerCounter += waveCounter*3
-            kyleCounter += waveCounter*2
-            rockthrowerCounter += waveCounter
+            narutoRunnerCounter += waveCounter * 3
+            kyleCounter += waveCounter * 2
+            rockThrowerCounter += waveCounter
             attackerArray = attackersFactory()
             } else {
                 print("Attackers WIN in \(waveCounter) wave(s)!")

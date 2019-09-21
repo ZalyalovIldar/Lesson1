@@ -1,29 +1,32 @@
 import UIKit
 
-class Car{
-    fileprivate var colour : String?
-    private var plateNumber : Int?
+class Car {
     
-    public func sound(){
+    fileprivate var colour: String?
+    private var plateNumber: Int?
+    
+    public func sound() {
         print("Vroom")
     }
     
-    init(plateNumber : Int) {
+    init(plateNumber: Int) {
         self.plateNumber = plateNumber
     }
     
-    public func paintCar(colour : String){
+    public func paintCar(colour: String) {
         self.colour = colour
         print("New colour is " + colour)
     }
 }
-class SportCar : Car{
+class SportCar: Car {
+    
     override func sound() {
         print("Rooooom")
     }
 }
 
-class Truck : Car{
+class Truck: Car {
+    
     override func sound() {
         print("Rrrrrrom")
     }
