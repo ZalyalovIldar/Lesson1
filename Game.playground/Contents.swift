@@ -1,6 +1,7 @@
 import UIKit
 
 class Unit {
+    
     var hp: Double
     var damage: Double
     var defense: Double
@@ -10,6 +11,7 @@ class Unit {
     
     // if any customization is needed
     init(hp: Double, damage: Double, defense: Double, agility: Double, strength: Double, nickname: String) {
+        
         self.hp = hp
         self.damage = damage
         self.defense = defense
@@ -20,6 +22,7 @@ class Unit {
     
     // default initializer
     init(nickname: String) {
+        
         hp = 100
         damage = 100
         defense = 10
@@ -29,9 +32,10 @@ class Unit {
     }
     
     func attack(to enemy: Unit) {
-        let damage = self.damage * (1 + strength/100)
-        var reducedDamage = damage * (1 - enemy.defense/100)
-        if Double.random(in: 0..<100) < enemy.agility {
+        
+        let damage = self.damage * (1 + strength / 100)
+        var reducedDamage = damage * (1 - enemy.defense / 100)
+        if Double.random(in: 0 ..< 100) < enemy.agility {
             reducedDamage *= 0.5
         }
         enemy.hp -= reducedDamage
@@ -39,8 +43,10 @@ class Unit {
 }
 
 class Weeb: Unit {
+    
     // У анимешника снижена защита, но увеличена ловкость
     override init(nickname: String) {
+        
         super.init(nickname: nickname)
         defense *= 0.75
         agility *= 1.5
@@ -48,8 +54,10 @@ class Weeb: Unit {
 }
 
 class Defender: Unit {
+    
     // У защитника больше защиты и хп
     override init(nickname: String) {
+        
         super.init(nickname: nickname)
         defense *= 2
         hp *= 2
@@ -57,8 +65,10 @@ class Defender: Unit {
 }
 
 class Jedi: Unit {
+    
     // У джедая снижена защита и хп, но серьезно увеличена ловкость и урон
     override init(nickname: String) {
+        
         super.init(nickname: nickname)
         defense *= 0.5
         hp *= 0.7
@@ -69,7 +79,8 @@ class Jedi: Unit {
     
     // Есть также небольшой шанс на двойную атаку
     override func attack(to enemy: Unit) {
-        if Double.random(in: 0..<100) > 95 {
+        
+        if Double.random(in: 0 ..< 100) > 95 {
             super.attack(to: enemy)
             super.attack(to: enemy)
         }
@@ -80,8 +91,10 @@ class Jedi: Unit {
 }
 
 class ChuckNorris: Unit {
+    
     // У Чака много хп и дамага, но шанс увернуться практически отсутствует
     override init(nickname: String) {
+        
         super.init(nickname: nickname)
         hp *= 1.75
         damage *= 2
@@ -91,13 +104,15 @@ class ChuckNorris: Unit {
 }
 
 class ZonaArea {
+    
     class func beginBattle(with attackers: [Unit], and guardians: [Unit], wave: Int) {
+        
         var attackersMutable = attackers
         var defendersMutable = guardians
         
         var uniqueId = 1
         
-        for waveNumber in 0..<wave {
+        for waveNumber in 0 ..< wave {
             while !defendersMutable.isEmpty && !attackersMutable.isEmpty {
                 for guardian in defendersMutable {
                     if let target = attackersMutable.randomElement() {
@@ -123,10 +138,10 @@ class ZonaArea {
                 return
             }
             if attackersMutable.isEmpty {
-                let numberOfReinforcements = 3 * (waveNumber+1)
+                let numberOfReinforcements = 3 * (waveNumber + 1)
                 print("Атакующие были разбиты на \(waveNumber) волне и теперь к ним идет подкрепление в размере \(numberOfReinforcements) юнитов")
-                for _ in 0..<numberOfReinforcements {
-                    let random = Int.random(in: 0..<10)
+                for _ in 0 ..< numberOfReinforcements {
+                    let random = Int.random(in: 0 ..< 10)
                     if random <= 5 {
                         attackersMutable.append(Weeb(nickname: "Weeb_\(uniqueId)"))
                     }
@@ -149,27 +164,10 @@ class ZonaArea {
 var attackers = [Unit]()
 var defenders = [Unit]()
 
-attackers.append(Weeb(nickname: "Weeb1"))
-attackers.append(Weeb(nickname: "Weeb2"))
-attackers.append(Weeb(nickname: "Weeb3"))
-attackers.append(Weeb(nickname: "Weeb4"))
-attackers.append(Weeb(nickname: "Weeb5"))
-attackers.append(Weeb(nickname: "Weeb6"))
-attackers.append(Weeb(nickname: "Weeb7"))
-attackers.append(Jedi(nickname: "Jedi1"))
-attackers.append(Jedi(nickname: "Jedi2"))
-attackers.append(Jedi(nickname: "Jedi3"))
-
-defenders.append(Defender(nickname: "Defender1"))
-defenders.append(Defender(nickname: "Defender2"))
-defenders.append(Defender(nickname: "Defender3"))
-defenders.append(Defender(nickname: "Defender4"))
-defenders.append(Defender(nickname: "Defender5"))
-defenders.append(Defender(nickname: "Defender6"))
-defenders.append(Defender(nickname: "Defender7"))
-defenders.append(Defender(nickname: "Defender8"))
-defenders.append(Defender(nickname: "Defender9"))
-defenders.append(Defender(nickname: "Defender10"))
+for i in 1 ... 10 {
+    attackers.append(Weeb(nickname: "Weeb\(i)"))
+    defenders.append(Defender(nickname: "Defender\(i)"))
+}
 
 ZonaArea.beginBattle(with: attackers, and: defenders, wave: 4)
 

@@ -1,11 +1,13 @@
 import UIKit
 
 class Node {
+    
     let value: Int
     var left: Node?
     var right: Node?
     
     init(value: Int) {
+        
         self.value = value
         left = nil
         right = nil
@@ -13,6 +15,7 @@ class Node {
 }
 
 class BinaryTree {
+    
     var root: Node?
     
     init(value: Int) {
@@ -24,6 +27,7 @@ class BinaryTree {
     }
     
     func add(element: Int) {
+        
         if root == nil {
             root = Node(value: element)
         }
@@ -53,6 +57,7 @@ class BinaryTree {
     }
     
     func contains(element: Int) -> Bool {
+        
         if root == nil {
             return false
         }
@@ -72,7 +77,6 @@ class BinaryTree {
             return false
         }
     }
-    
 }
 
 var tree = BinaryTree()
@@ -84,28 +88,33 @@ print(tree.contains(element: 3))
 
 
 protocol SimpleProtocol {
+    
     func doStuff()
 }
 
 struct SimpleStruct: SimpleProtocol {
+    
     func doStuff() {
         print("doing stuff")
     }
 }
 
 class SimpleRootClass: SimpleProtocol {
+    
     func doStuff() {
         print("doing stuff in a root way")
     }
 }
 
 class AnotherClass: SimpleRootClass {
+    
     override func doStuff() {
         print("doing stuff in a different way")
     }
 }
 
 class ModifiersExampleClass {
+    
     open var simplePublicComputedProperty: String {
         get {
             return "I'm visible from everywhere"
