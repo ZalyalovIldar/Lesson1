@@ -4,7 +4,7 @@ class Unit {
     
     var health: Int
     let damage: Int
-    let protection: Int
+    var protection: Int
     let agility: Int
     let nickname: String
     
@@ -43,13 +43,56 @@ class Unit {
     
 }
 
+class Healer: Unit {
+    func healTeam(team: inout [Unit]) {
+        let healingValue = Int.random(in: 100...150)
+        print("\(self.nickname) heals team for (\(healingValue))")
+        for teammate in team {
+            teammate.health += healingValue
+        }
+    }
+}
+
+class Ricardo: Unit {
+    //His dance is so good -> enemy lost 5 protection
+    func criticalDance(enemy: inout Zona51Guard) {
+        print("Ricardo's critical dance decreases enemy protection")
+        if enemy.protection < 5 {
+            enemy.protection = 0
+        } else {
+            enemy.protection -= 5
+        }
+    }
+}
+
 class JoJo: Unit {
+    //Is this JoJo reference?
 }
 
 class Jedi: Unit {
+    func criticalAttack(enemy: inout Zona51Guard) -> Bool {
+        //With 50% chance instantly attacks enemy through protection for 100 damage
+        if Int.random(in: 1...2) == 1 {
+            print("\(self.nickname) deals critical damage to \(enemy.nickname)")
+            enemy.health -= 100
+            return true
+        } else {
+            return false
+        }
+    }
 }
 
 class ChuckNorris: Unit {
+    //With 10% chance destroys all enemy team
+    func criticalAttack(enemys: inout [Zona51Guard]) -> Bool {
+        if Int.random(in: 1...10) == 1 {
+            print("\(self.nickname) uses extrapower and destroys all enemy team ")
+            enemys.removeAll()
+            return true
+        } else {
+            return false
+        }
+    }
 }
 
 class Zona51Guard: Unit {
@@ -76,6 +119,26 @@ class ZonaArea {
             
             let currentAttacker = attackersInBattle.randomElement()!
             var currentDefender = defendersInBattle.randomElement()!
+            
+            if currentAttacker is ChuckNorris {
+                let attacker = currentAttacker as! ChuckNorris
+                if attacker.criticalAttack(enemys: &defendersInBattle) { break }
+            }
+            
+            if currentAttacker is Jedi {
+                let attacker = currentAttacker as! Jedi
+                attacker.criticalAttack(enemy: &currentDefender)
+            }
+            
+            if currentAttacker is Healer {
+                let attacker = currentAttacker as! Healer
+                attacker.healTeam(team: &attackersInBattle)
+            }
+            
+            if currentAttacker is Ricardo {
+                let attacker = currentAttacker as! Ricardo
+                attacker.criticalDance(enemy: &currentDefender)
+            }
             
             print("\(currentAttacker.nickname) attacks \(currentDefender.nickname)")
             
@@ -135,17 +198,19 @@ enum ResultOfAttack {
 let attacker1 = JoJo(health: 400, damage: 150, protection: 10, agility: 1, nickname: "JoJo")
 let attacker2 = Jedi(health: 300, damage: 50, protection: 50, agility: 3, nickname: "Luke")
 let attacker3 = ChuckNorris(health: 500, damage: 200, protection: 70, agility: 2, nickname: "Chuck Norris")
-var attackers = [attacker1, attacker2, attacker3]
+let attacker4 = Healer(health: 250, damage: 0, protection: 20, agility: 1, nickname: "Healer")
+let attacker5 = Ricardo(health: 100, damage: 20, protection: 20, agility: 2, nickname: "Ricardo Milos")
+var attackers = [attacker1, attacker2, attacker3, attacker4, attacker5]
 
 var defenders: [Zona51Guard] = []
 for i in 1...10 {
-    defenders.append(Zona51Guard(health: 300, damage: 40, protection: 50, agility: 3, nickname: "Defender #\(i)"))
+    defenders.append(Zona51Guard(health: 400, damage: 80, protection: 50, agility: 3, nickname: "Defender #\(i)"))
 }
 
 //MARK: - Start Zona51Battle
 
 let zoneArea = ZonaArea()
-let amountOfWaves = 4
+let amountOfWaves = 7
 
 for wave in 1 ... amountOfWaves {
     
