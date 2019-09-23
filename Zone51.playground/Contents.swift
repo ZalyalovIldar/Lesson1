@@ -45,8 +45,6 @@ class Unit {
         
     }
     
-    
-    
 }
 
 class SoldierOfZone51: Unit {
@@ -106,9 +104,11 @@ class Grazdan: Unit {
 }
 
 enum LevelOfDifficulty {
+    
     case easy
     case mid
     case difficult
+    
 }
 
 class ZonaArea {
@@ -198,8 +198,10 @@ class ZonaArea {
 }
 
 enum KindOfUnits {
+    
     case guardians
     case attackers
+
 }
 
 func createUnits(kind: KindOfUnits) -> [Unit] {
@@ -224,6 +226,9 @@ func createUnits(kind: KindOfUnits) -> [Unit] {
         for x in 1 ... 2 {
             units.append(KungFuMaster(nickName: "Master_\(x)"))
         }
+        for x in 3 ... 15 {
+            units.append(KungFuMaster(nickName: "Master_\(x)"))
+        }
     }
     
     return units
@@ -233,4 +238,4 @@ var battleZone = ZonaArea()
 var guardians = createUnits(kind: .guardians)
 var attackers = createUnits(kind: .attackers)
 
-print(battleZone.beginBattle(with_attackers: attackers, guardians: guardians, wave: 3))
+print(battleZone.beginBattle(with_attackers: attackers, guardians: guardians, wave: 15))
