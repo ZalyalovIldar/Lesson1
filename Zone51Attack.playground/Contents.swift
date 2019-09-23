@@ -15,13 +15,12 @@ class Unit {
     }
     
     func updatePowerBy(wave: Int) {
-        self.armor += wave
         self.attackPower += wave
         self.health += wave
     }
     
     func attacks(whom: Unit) {
-        whom.health -= self.attackPower
+        whom.health -= self.attackPower + whom.armor
         print(self.name + " attacks " + whom.name + " for " + String(self.attackPower - whom.armor) + " damage. " + String(whom.armor) + " damage blocked")
         whom.react()
     }
