@@ -1,3 +1,11 @@
+enum ResultOfAttack {
+    
+    case win
+    case lost
+    case bothAlive
+    case bothDead
+    
+}
 
 class Unit {
     
@@ -15,45 +23,42 @@ class Unit {
         self.protection = protection
     }
     
-    func attack(to enemy: inout Unit) -> Bool? {
-        //True -> Succsess attack
-        //nil -> Both are dead
+    func attack(to enemy: inout Unit) -> ResultOfAttack {
         
+        print("")
         print("\(self.nickname) attacks \(enemy.nickname)")
-        print("\(self.nickname) health is: \(self.health)")
-        print("\(enemy.nickname) health is: \(enemy.health)")
         
         self.health += self.protection
+        print("Debug: \(self.nickname) had \(self.health) health")
         self.health -= (enemy.damage * enemy.agility)
+        print("Debug: And now \(self.nickname) have \(self.health) health")
         
         enemy.health += enemy.protection
-        print("Debug: Enemy had \(enemy.health) health")
+        print("Debug: \(enemy.nickname) had \(enemy.health) health")
         enemy.health -= (self.damage * self.agility)
-        print("Debug: ANd now \(enemy.health) health")
+        print("Debug: And now \(enemy.nickname) have \(enemy.health) health")
         
         if self.health <= 0 && enemy.health <= 0 {
             
             print("\(self.nickname) and \(enemy.nickname) killed eachother")
-            print("")
+            //print("")
             
-            return nil
+            return .bothDead
         }
         if enemy.health < 0 {
             
             print("\(self.nickname) eliminates \(enemy.nickname)")
-            print("")
             
-            return true
+            return .win
         }
         if self.health < 0 {
             
             print("\(enemy.nickname) eliminates \(self.nickname)")
-            print("")
-            
-            return false
+
+            return .lost
         }
         
-        return nil
+        return .bothAlive
     }
     
 }
@@ -94,24 +99,31 @@ class ZonaArea {
             let currentAttacker = attackersInBattle.randomElement()!
             var currentDefender = defendersInBattle.randomElement()!
             
-            guard let resultOfAttack = currentAttacker.attack(to: &currentDefender) else {
-                defendersInBattle.remove(at: defendersInBattle.firstIndex(where: { (Unit) -> Bool in
-                    Unit === currentDefender
-                }) ?? 0)
-                attackersInBattle.remove(at: attackersInBattle.firstIndex(where: { (Unit) -> Bool in
-                    Unit === currentAttacker
-                }) ?? 0)
-                continue
-            }
+            let resultOfAttack = currentAttacker.attack(to: &currentDefender)
             
-            if resultOfAttack {
+            switch resultOfAttack {
+                
+            case .win:
                 defendersInBattle.remove(at: defendersInBattle.firstIndex(where: { (Unit) -> Bool in
                     Unit === currentDefender
                 }) ?? 0)
-            } else {
+                
+            case .lost:
                 attackersInBattle.remove(at: attackersInBattle.firstIndex(where: { (Unit) -> Bool in
                     Unit === currentAttacker
                 }) ?? 0)
+                
+            case .bothDead:
+                defendersInBattle.remove(at: defendersInBattle.firstIndex(where: { (Unit) -> Bool in
+                    Unit === currentDefender
+                }) ?? 0)
+                attackersInBattle.remove(at: attackersInBattle.firstIndex(where: { (Unit) -> Bool in
+                    Unit === currentAttacker
+                }) ?? 0)
+                
+            case .bothAlive:
+                print("Both are survived")
+
             }
             
         }
@@ -124,17 +136,15 @@ class ZonaArea {
 
 let attacker1 = Animeshnik(health: 600, damage: 150, protection: 1, agility: 1, nickname: "JoJo")
 let attacker2 = Jedi(health: 300, damage: 50, protection: 50, agility: 3, nickname: "Luke")
-let attacker3 = ChuckNorris(health: 500, damage: 100, protection: 70, agility: 2, nickname: "Chuck Norris")
-let attacker4 = Animeshnik(health: 100, damage: 80, protection: 1, agility: 1, nickname: "Dio")
-let attacker5 = Animeshnik(health: 100, damage: 30, protection: 1, agility: 2, nickname: "SpeedWagon")
-let attacker6 = Jedi(health: 300, damage: 50, protection: 50, agility: 2, nickname: "Yoda")
-var attackers = [attacker1, attacker2, attacker3, attacker4, attacker5, attacker6]
+let attacker3 = ChuckNorris(health: 500, damage: 200, protection: 70, agility: 2, nickname: "Chuck Norris")
+
+var attackers = [attacker1, attacker2, attacker3]
 
 let defendersNames = ["John", "Steven", "Mike", "Alfred"]
 var defenders: [Unit] = []
 
 for defenderName in defendersNames {
-    defenders.append(Unit(health: 250, damage: 40, protection: 50, agility: 3, nickname: defenderName))
+    defenders.append(Unit(health: 150, damage: 40, protection: 50, agility: 3, nickname: defenderName))
 }
 
 let zoneArea = ZonaArea()
