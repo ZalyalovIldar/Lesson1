@@ -108,7 +108,7 @@ var guardians = [Unit]()
 
 func prepareForBattle() {
     
-    for num in 1...10 {
+    for num in 1...20 {
         guardians.append(Defender(name: "Defender #\(num)"))
     }
     
@@ -140,12 +140,13 @@ class ZonaArea {
         
         var attackersArray = attackers
         var guardiansArray = guardians
+        var waveNum = 1
         
-        for waveNum in 1...wave {
+        while waveNum <= wave {
             while attackersArray.count != 0 && guardiansArray.count != 0 {
-                
+            
                 // Сначала бьют захватчики
-                for attacker in attackersArray {
+                if let attacker = attackersArray.randomElement() {
                     guard let aim = guardiansArray.randomElement() else {
                         attackersWon(on: waveNum)
                         return
@@ -166,14 +167,13 @@ class ZonaArea {
                         
                         guardiansArray.remove(at: guardiansArray.firstIndex(where: { !$0.isAlive })!)
                     }
+                } else {
+                    guardiansWon(after: waveNum)
                 }
                 
                 // Потом отвечают защитники
-                for guardian in guardiansArray {
-                    guard let aim = attackersArray.randomElement() else {
-                        guardiansWon(after: waveNum)
-                        return
-                    }
+                if let guardian = guardiansArray.randomElement() {
+                    guard let aim = attackersArray.randomElement() else { return }
                     
                     guardian.attack(to: aim)
                     
@@ -185,32 +185,22 @@ class ZonaArea {
                         
                         attackersArray.remove(at: attackersArray.firstIndex(where: { !$0.isAlive })!)
                     }
+                } else {
+                    attackersWon(on: waveNum)
                 }
             }
             
             if attackersArray.isEmpty {
-                getReinforcement(for: attackersArray, wave: waveNum)
+                
+                let count = Int.random(in: 1...10)
+                
+                print("Атака отражена на \(waveNum) волне, вызываем подмогу в количестве \(count) росгвардейцев\n")
+                
+                for id in 0 ..< count  {
+                    attackersArray.append(RussianGuard(name: "Russian Guard #\(id * 10)"))
+                }
             }
-        }
-    }
-    
-    func getRandomEnemy(from array: [Unit]) -> Unit? {
-        guard let target = array.randomElement() else {
-            return nil
-        }
-        return target
-    }
-    
-    
-    func getReinforcement(for units: [Unit], wave: Int) {
-        
-        var unitsMutating = units
-        let reinforcement = 5 + wave
-        
-        print("Атака отражена на \(wave) волне, вызываем подмогу в количестве \(reinforcement) росгвардейцев\n")
-        
-        for id in 0 ..< reinforcement {
-            unitsMutating.append(RussianGuard(name: "Russian Guard #\(id * 10)"))
+            waveNum += 1
         }
     }
     
@@ -226,4 +216,7 @@ class ZonaArea {
 
 var zone = ZonaArea()
 prepareForBattle()
-zone.beginBattle(with: attackers, guardians: guardians, wave: 2)
+zone.beginBattle(with: attackers, guardians: guardians, wave: 4)
+
+
+
