@@ -3,6 +3,7 @@ import UIKit
 var str = "Hello, playground"
 
 class Animal {
+    
     public var color: String
     public var numberOfPaws: Int
     
@@ -17,17 +18,23 @@ class Animal {
     public func voice() {
         print(" I am Animal")
     }
+    
 }
+
 class Dog: Animal {
+    
     public override func voice() {
         print("Gav gav")
     }
+    
 }
 
 class Cat: Animal {
+    
     public override func voice() {
         print("Miau miau")
     }
+    
 }
 
 var dog: Animal = Dog(color: "brown", numberOfPaws: 4, idOfAnimal: 1)
@@ -40,6 +47,7 @@ cat.voice()
 
 
 class Node {
+    
     var value: Int
     var left: Node
     var right: Node
@@ -109,6 +117,7 @@ class Tree {
         }
         return false
     }
+    
 }
 
 
