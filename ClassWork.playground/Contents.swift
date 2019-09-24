@@ -48,36 +48,3 @@ class Man {
 let ManAzat = Man(name: "Azat")
 ManAzat.changeName(name: "Pasha")
 ManAzat.printName()
-
-
-
-class Node{
-    var root: Node?
-    var rightChild: Node?
-    var leftChild: Node?
-    var number: Int
-    init(number: Int) {
-        self.number = number
-    }
-    
-    func addN(newNode: Node) {
-        if(root != nil) {
-            if(newNode.number < root!.number) {
-                if(leftChild != nil) {
-                    leftChild!.addN(newNode: newNode)
-                }
-                else{
-                    leftChild = newNode
-                }
-            }
-            else {
-                if(rightChild != nil) {
-                    rightChild!.addN(newNode: newNode)
-                }
-                else{
-                    rightChild = newNode
-                }
-            }
-        }
-    }
-}
