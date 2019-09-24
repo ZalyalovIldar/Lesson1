@@ -23,7 +23,7 @@ for var value in (0 ..< 5).reversed() {
     value += 1
     print(value)
 }
-
+//ab
 var dictionary = ["key":12, "key2":13]
 
 dictionary["key2"] = 14
