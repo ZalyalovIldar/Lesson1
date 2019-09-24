@@ -89,7 +89,7 @@ public class ZonaArea51Game {
                 aliveGuardians.remove(at: aliveGuardians.firstIndex(where: {$0 === aliveGuardians[0]})!)
             }
             if aliveGuardians.count == 0{
-                print("Нападающие победили на \(wave) волне")
+                print("Нападающие победили на \(currentWave) волне")
                 break
             }
             if aliveGuardians.count == 0 && aliveAttackers.count == 0{
