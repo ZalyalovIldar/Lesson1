@@ -120,23 +120,19 @@ class ZonaArea {
             let currentAttacker = attackersInBattle.randomElement()!
             var currentDefender = defendersInBattle.randomElement()!
             
-            if currentAttacker is ChuckNorris {
-                let attacker = currentAttacker as! ChuckNorris
+            if let attacker = currentAttacker as? ChuckNorris {
                 if attacker.criticalAttack(enemys: &defendersInBattle) { break }
             }
             
-            if currentAttacker is Jedi {
-                let attacker = currentAttacker as! Jedi
+            if let attacker = currentAttacker as? Jedi {
                 attacker.criticalAttack(enemy: &currentDefender)
             }
             
-            if currentAttacker is Healer {
-                let attacker = currentAttacker as! Healer
+            if let attacker = currentAttacker as? Healer {
                 attacker.healTeam(team: &attackersInBattle)
             }
             
-            if currentAttacker is Ricardo {
-                let attacker = currentAttacker as! Ricardo
+            if let attacker = currentAttacker as? Ricardo {
                 attacker.criticalDance(enemy: &currentDefender)
             }
             
