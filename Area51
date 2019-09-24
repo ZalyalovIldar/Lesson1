@@ -1,0 +1,70 @@
+import UIKit
+
+// У меня три допки в четверг, я ещё доделаю ;(
+
+class Unit {
+    var health: Int
+    var damage: Int
+    var defend: Int
+    var dexterity: Int
+    var speed: Int
+    var nickname: String
+    var checkAlive: Bool = true
+    
+    init(health:Int, damage:Int, speed:Int, defend:Int,  dexterity:Int, nickname:String) {
+     
+        self.health = health
+        self.damage = damage
+        self.speed = speed
+        self.dexterity = dexterity
+        self.nickname = nickname
+        
+    }
+    
+    func attack(enemy: Unit){
+        damage = speed + dexterity
+        if (damage  > enemy.health ) {
+            enemy.health -= 100
+        }
+      
+    }
+
+    
+}
+
+class androidDeveloper: Unit {
+    
+    
+    
+}
+
+class iosDeveloper: Unit {
+    
+   func attack(to enemy: defendersOfArea) {
+       
+    }
+    
+    
+}
+
+class defendersOfArea: Unit {
+    
+    func attack(to enemy: iosDeveloper) {
+        
+        enemy.health -= damage
+    }
+    
+    func attack(to enemy: androidDeveloper) {
+        
+    }
+    
+
+class ZonaArea {
+    
+        func beginBattle(with iosDeveloper: [Unit], androidDeveloper: [Unit], defendersOfArea: [Unit], wave: Int) {
+    
+    }
+    
+}
+    
+}
