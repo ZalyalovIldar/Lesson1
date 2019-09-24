@@ -155,7 +155,7 @@ class ZonaArea {
                 countGuardians += 1
             }
             
-            x.attack(to_enemy: guardians[countGuardians])
+            oneAttacker.attack(to_enemy: guardians[countGuardians])
         }
         
         return !checkAllDied(units: guardians)
