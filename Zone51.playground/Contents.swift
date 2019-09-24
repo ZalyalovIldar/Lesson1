@@ -114,13 +114,13 @@ class ZonaArea {
     
     private func checkAllDied(units: [Unit]) -> Bool {
         
-        for x in units {
-            if !x.isDied {
-                return false
-            }
+        units.filter { $0.isDied == false }
+        
+        if units.isEmpty {
+            return true
         }
         
-        return true
+        return false
     }
     
     private func getAttackers(difficulty: LevelOfDifficulty, allAttackers: [Unit]) -> [Unit] {
@@ -139,34 +139,32 @@ class ZonaArea {
                 attackers.append(allAttackers[x])
             }
         case .difficult:
-            return allAttackers
+            attackers = allAttackers
         }
         
-        return [Unit]()
+        return attackers
     }
     
-    private func startOneWave(wave: Int, difficulty: LevelOfDifficulty)  -> Bool{
+    private func startOneWave(wave: Int, difficulty: LevelOfDifficulty) -> Bool {
         
         let attackers = getAttackers(difficulty: difficulty, allAttackers: self.allAttackers)
         
-        for x in attackers {
+        for oneAttacker in attackers {
+            
             if guardians[countGuardians].isDied && countGuardians < guardians.count - 1 {
                 countGuardians += 1
             }
+            
             x.attack(to_enemy: guardians[countGuardians])
         }
         
-        if checkAllDied(units: guardians) {
-            return false
-        }
-        
-        return true
+        return !checkAllDied(units: guardians)
     }
     
-    func beginBattle(with_attackers: [Unit], guardians: [Unit], wave: Int) -> String {
+    func beginBattle(withAttackers: [Unit], guardians: [Unit], wave: Int) -> String {
         
         self.guardians = guardians
-        self.allAttackers = with_attackers
+        self.allAttackers = withAttackers
         
         for i in 1 ... wave {
             var check: Bool
@@ -229,4 +227,4 @@ var battleZone = ZonaArea()
 var guardians = createUnits(kind: .guardians)
 var attackers = createUnits(kind: .attackers)
 
-print(battleZone.beginBattle(with_attackers: attackers, guardians: guardians, wave: 15))
+print(battleZone.beginBattle(withAttackers: attackers, guardians: guardians, wave: 15))
