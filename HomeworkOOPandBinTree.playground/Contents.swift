@@ -18,7 +18,6 @@ class Animal {
     public func voice() {
         print(" I am Animal")
     }
-    
 }
 
 class Dog: Animal {
@@ -26,7 +25,6 @@ class Dog: Animal {
     public override func voice() {
         print("Gav gav")
     }
-    
 }
 
 class Cat: Animal {
@@ -34,17 +32,13 @@ class Cat: Animal {
     public override func voice() {
         print("Miau miau")
     }
-    
 }
 
 var dog: Animal = Dog(color: "brown", numberOfPaws: 4, idOfAnimal: 1)
-
 var cat: Animal = Cat(color: "black", numberOfPaws: 4, idOfAnimal: 2)
-
 
 dog.voice()
 cat.voice()
-
 
 class Node {
     
@@ -59,7 +53,6 @@ class Node {
         self.right = right
         self.parent = parent
     }
-    
 }
 
 class Tree {
@@ -77,6 +70,7 @@ class Tree {
     }
     
     func add(value: Int) {
+        
         if value < self.value {
             if self.left != nil {
                 self.left!.add(value: value)
@@ -101,6 +95,7 @@ class Tree {
     }
     
     func contains(value: Int, tree: Tree?) -> Bool {
+        
         if tree == nil {
             return false
         }
@@ -117,9 +112,7 @@ class Tree {
         }
         return false
     }
-    
 }
-
 
 var tree: Tree = Tree(value: 1, parent: nil)
 

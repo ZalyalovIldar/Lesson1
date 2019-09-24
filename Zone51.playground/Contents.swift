@@ -17,7 +17,6 @@ class Unit {
         self.agility = 20
         self.nickName = nickName
         self.isDied = false
-        
     }
     
     init(hp: Double, damage: Double, protection: Double, agility: Double, nickName: String, isDied: Bool) {
@@ -28,7 +27,6 @@ class Unit {
         self.agility = agility
         self.nickName = nickName
         self.isDied = false
-        
     }
     
     func attack(to_enemy: Unit){
@@ -42,9 +40,7 @@ class Unit {
         if to_enemy.hp <= 0 {
             to_enemy.isDied = true
         }
-        
     }
-    
 }
 
 class SoldierOfZone51: Unit {
@@ -52,55 +48,54 @@ class SoldierOfZone51: Unit {
     override init(nickName: String) {
         super.init(nickName: nickName)
     }
-    
 }
 
 class KungFuMaster: Unit {
     
     override init(nickName: String) {
+        
         super.init(nickName: nickName)
         self.hp = 150
         self.damage = 50
         self.protection = 30
         self.agility = 50
     }
-    
 }
 
 class Putin: Unit {
     
     override init(nickName: String) {
+        
         super.init(nickName: nickName)
         self.hp = 500
         self.damage = 5
         self.protection = 50
         self.agility = 5
     }
-    
 }
 
 class BrusLi: Unit {
     
     override init(nickName: String) {
+        
         super.init(nickName: nickName)
         self.hp = 150
         self.damage = 100
         self.protection = 30
         self.agility = 70
     }
-    
 }
 
 class Grazdan: Unit {
     
     override init(nickName: String) {
+        
         super.init(nickName: nickName)
         self.hp = 70
         self.damage = 5
         self.protection = 5
         self.agility = 15
     }
-    
 }
 
 enum LevelOfDifficulty {
@@ -108,7 +103,6 @@ enum LevelOfDifficulty {
     case easy
     case mid
     case difficult
-    
 }
 
 class ZonaArea {
@@ -192,16 +186,13 @@ class ZonaArea {
         }
         
         return "В Зону 51 не прорвались!!!"
-        
     }
-    
 }
 
 enum KindOfUnits {
     
     case guardians
     case attackers
-
 }
 
 func createUnits(kind: KindOfUnits) -> [Unit] {
