@@ -1,6 +1,7 @@
 import UIKit
 
 public class Unit {
+    
     private var health: Int
     private var damage: Int
     private var protection: Int
@@ -14,6 +15,7 @@ public class Unit {
     }
     
     func addAgilityBuff(){
+        
         damage += agility
         protection += agility
     }
@@ -28,6 +30,7 @@ public class Unit {
 }
 
 public class Animeshnick : Unit {
+    
     private var name: String
     
     init(name: String){
@@ -38,6 +41,7 @@ public class Animeshnick : Unit {
 }
 
 public class Jedi : Unit {
+    
     private var name: String
     
     init(name: String){
@@ -48,6 +52,7 @@ public class Jedi : Unit {
 }
 
 public class ChuckNorris : Unit {
+    
     private var name: String
     
     init(name: String){
@@ -58,6 +63,7 @@ public class ChuckNorris : Unit {
 }
 
 public class Area51Defenser : Unit {
+    
     private var name: String
     
     init(name: String){
@@ -68,14 +74,18 @@ public class Area51Defenser : Unit {
 }
 
 public class ZonaArea51Game {
+    
     func beginBattle(with attackers: [Unit], guardians: [Unit], wave: Int){
+        
         var aliveAttackers = attackers
         var aliveGuardians = guardians
         var currentWave = 1
-        while aliveGuardians.count != 0 || aliveAttackers.count != 0 {
+        
+        while !aliveGuardians.isEmpty || !aliveAttackers.isEmpty {
             let currentAttacker = aliveAttackers[0]
             let currentGuardian = aliveGuardians[0]
             var isAttackerLoser: Bool = false
+            
             while (currentAttacker.getHealth()) <= 0 || (currentGuardian.getHealth()) <= 0 {
                 currentAttacker.attack(enemy: currentGuardian)
                 currentGuardian.attack(enemy: currentAttacker)
@@ -83,7 +93,7 @@ public class ZonaArea51Game {
                     isAttackerLoser = true
                 }
             }
-            if isAttackerLoser == true {
+            if isAttackerLoser {
                 aliveAttackers.remove(at: aliveAttackers.firstIndex(where: {$0 === aliveAttackers[0]})!)
             } else {
                 aliveGuardians.remove(at: aliveGuardians.firstIndex(where: {$0 === aliveGuardians[0]})!)
@@ -98,7 +108,7 @@ public class ZonaArea51Game {
             }
             aliveAttackers.append(ChuckNorris(name: "Chuck Norris"))
         }
-        if aliveGuardians.count != 0 {
+        if !aliveGuardians.isEmpty {
             print("Бойцы Зоны 51 отбили волну (\(currentWave))")
             currentWave += 1
             beginBattle(with: aliveAttackers, guardians: aliveGuardians, wave: currentWave)

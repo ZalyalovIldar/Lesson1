@@ -1,6 +1,7 @@
 import UIKit
 
 public class Dancer {
+    
     private var name: String
     private var age: Int
     
@@ -14,15 +15,17 @@ public class Dancer {
     }
     
     func dance(tired: Bool){
+        
         if tired {
             print("I don't wanna dance")
         } else {
-        print("I'm dancing")
+            print("I'm dancing")
         }
     }
 }
 
 class DancerTango : Dancer {
+    
     override func dance(){
         print("I'm dancing tango")
     }
