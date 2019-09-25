@@ -22,6 +22,7 @@ for var value in (0 ..< 5).reversed() {
     
     value += 1
     print(value)
+    print (value)
 }
 
 var dictionary = ["key":12, "key2":13]
