@@ -3,11 +3,11 @@ import UIKit
 class AbstractPhone {     //абстракция
     let year: Int
     
-    init (year: Int){
+    init (year: Int) {
         self.year = year
     }
     
-    func call(outputNumber: Int){
+    func call(outputNumber: Int) {
         print("Позвонить по номеру " + "\(outputNumber)")
     }
     
@@ -16,16 +16,16 @@ class AbstractPhone {     //абстракция
     }
 }
 
-class SomePhone{     //инкапсуляция
+class SomePhone {     //инкапсуляция
     private let macAddress: Int
     private let company: String
     
-    init(macAddress: Int, company: String){
+    init(macAddress: Int, company: String) {
         self.macAddress = macAddress
         self.company = company
     }
     
-    private func openConnection(){
+    private func openConnection() {
         //findComutator
         //openNewConnection
     }
@@ -47,34 +47,34 @@ class WirelessPhone: AbstractPhone {     //наследование
         super.init(year: year)
     }
     
-    override func ring(inputNumber: Int){
+    override func ring(inputNumber: Int) {
         print("Вам звонит абонент " + "\(inputNumber)")
     }
 }
 
-class Phone: AbstractPhone{
-    override init(year: Int){
+class Phone: AbstractPhone {
+    override init(year: Int) {
         super.init(year: year)
     }
     
-    override func call(outputNumber: Int){
+    override func call(outputNumber: Int) {
         print("Вызываю номер" + "\(outputNumber)")
     }
     
-    override func ring(inputNumber: Int){
+    override func ring(inputNumber: Int) {
         print("Телефон звонит")
     }
 }
 
-class VideoPhone: AbstractPhone{
-    override init(year: Int){
+class VideoPhone: AbstractPhone {
+    override init(year: Int) {
         super.init(year: year)
     }
-    override func call(outputNumber: Int){
+    override func call(outputNumber: Int) {
         print("Подключаю видеоканал для абонента " + "\(outputNumber)")
     }
     
-    override func ring(inputNumber: Int){
+    override func ring(inputNumber: Int) {
         print("У вас входящий видеовызов..." + "\(inputNumber)")
     }
     
@@ -82,10 +82,10 @@ class VideoPhone: AbstractPhone{
 
 class User {
     let name: String
-    init(name: String){
+    init(name: String) {
         self.name = name
     }
-    func callAnotherUser(number: Int, phone: AbstractPhone){
+    func callAnotherUser(number: Int, phone: AbstractPhone) {
         //полиморфизм
         phone.call(outputNumber: number)
     }

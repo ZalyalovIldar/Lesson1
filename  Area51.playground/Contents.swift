@@ -9,7 +9,7 @@ class Unit {
     var agility: Int
     var alive: Bool = true // жив ли?
     
-    init(name: String, health: Int, damage: Int, protection: Int, agility: Int){
+    init(name: String, health: Int, damage: Int, protection: Int, agility: Int) {
         self.nickname = name
         self.health = health
         self.damage = damage
@@ -17,8 +17,8 @@ class Unit {
         self.agility = agility
     }
     
-    func attack(enemy: Unit){
-        if(damage > enemy.health && health > enemy.health){
+    func attack(enemy: Unit) {
+        if damage > enemy.health && health > enemy.health {
             health = health + 4
             enemy.health = 0
         }else{
@@ -28,10 +28,12 @@ class Unit {
         }
     }
     
-    func lifeCheck() -> Bool{
-        if(health == 0 ||  health < 0){
+    func lifeCheck() -> Bool {
+        
+        if health == 0 ||  health < 0 {
             alive = false
-        }else{
+        }
+        else {
             alive = true
         }
         return alive
@@ -40,7 +42,7 @@ class Unit {
 
 class HomerSimpson: Unit{
     override func lifeCheck() -> Bool{
-        if(health == 0 || health < 0 || protection == 0 || protection < 0){
+        if health == 0 || health < 0 || protection == 0 || protection < 0 {
             alive = false
             print(nickname + " Все я больше не могу идти! Идите дальше сами....а меня несите!")
         }
@@ -50,11 +52,13 @@ class HomerSimpson: Unit{
 }
 
 class Stitch: Unit{
-    override func attack(enemy: Unit){
-        if(damage > enemy.protection){
+    override func attack(enemy: Unit) {
+        
+        if damage > enemy.protection {
             health = health + enemy.health
             enemy.health = 0
-        }else{
+        }
+        else {
             enemy.health = enemy.health + 2
             
         }
@@ -62,20 +66,23 @@ class Stitch: Unit{
 }
 
 class PinkPanther: Unit{
-    override func attack(enemy: Unit){
-        if(health + damage > enemy.health){
+    override func attack(enemy: Unit) {
+        
+        if health + damage > enemy.health {
             enemy.health = 0
-        }else{
+        }
+        else {
             enemy.health = enemy.health + 1
         }
     }
 }
 
-class Squidward: Unit{
+class Squidward: Unit {
 }
 
-class ZoneArea51{
-    func beginBattle(with attackers: [Unit], guardians: [Unit], wave: Int){
+class ZoneArea51 {
+    func beginBattle(with attackers: [Unit], guardians: [Unit], wave: Int) {
+        
         var newWave: Int = 0
         var printWave: Int = 0
         let numGuardians: Int = Int.random(in: 0..<guardians.count)
@@ -85,22 +92,24 @@ class ZoneArea51{
         var countWinGuardians: Int = 0
         var countWinAttackers: Int = 0
         
-        while(newWave < wave){
+        while(newWave < wave) {
+            
             attackers[numAttackers].attack(enemy: guardians[numGuardians])
-            if(guardians[numGuardians].lifeCheck()){
+            if(guardians[numGuardians].lifeCheck()) {
                 attackers[numAttackers].health = 0
                 countWinGuardians += 1
-            }else{
+            }
+            else{
                 countWinAttackers += 1
                 printWave += 1
             }
             
-            if(countWinGuardians > countWinAttackers){
+            if(countWinGuardians > countWinAttackers) {
                 print("Защитил и затащил: " + guardians[numGuardians].nickname)
-            }else{
+            }
+            else {
                 print("Зона пала в " + "\(printWave)" + " волне")
             }
-            
             newWave += 1
         }
     }

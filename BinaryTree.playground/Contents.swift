@@ -23,24 +23,28 @@ class BinaryTree {
         return insertToBT(value: newValue, root: root)
     }
 
-    func insertToBT(value: Int, root: Node){
+    func insertToBT(value: Int, root: Node) {
+        
         let currentValue = root.value
-        if (currentValue != value) {
+        if currentValue != value {
             if (value < currentValue) {
                 if let left = root.left {
                     insertToBT(value: value, root: left);
-                }else{
+                }
+                else {
                     root.left = Node(value: value);
                 }
             }
-            if (value > currentValue){
+            if value > currentValue {
                 if let right = root.right {
                     insertToBT(value: value, root: right)
-                }else{
+                }
+                else {
                     root.right = Node(value: value)
                 }
             }
-        }else{
+        }
+        else {
             root.value = value;
         }
     }
@@ -50,10 +54,12 @@ class BinaryTree {
     }
     
     func searchToBT(start: Node?, value: Int) -> Bool {
+        
         if let start = start {
             if start.value == value {
                 return true
-            } else {
+            }
+            else {
                 return searchToBT(start: start.left, value: value) || searchToBT(start: start.right, value: value)
             }
         }
