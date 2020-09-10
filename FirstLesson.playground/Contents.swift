@@ -1,105 +1,103 @@
 import UIKit
 
-var str = "Hello, playground"
-let someInt = 10
-
-print(str + " \(someInt)")
-
-let array = [1,2,3,4,5]
-
-var newArray = [Int]()
-var newArray2: [Int] = []
-var newArray3: Array<Int> = []
-var newArray4 = Array<Int>()
-
-newArray.append(contentsOf: array)
-
-for value in newArray.enumerated() {
-    newArray2.insert(value.element, at: value.offset)
-}
-
-for var value in (0 ..< 5).reversed() {
+//OOP example
+class Programmer {
     
-    value += 1
-    print(value)
-}
-
-var dictionary = ["key":12, "key2":13]
-
-dictionary["key2"] = 14
-
-dictionary
-
-if someInt > 10 {
+    public let programmingLanguage: String
+    public let salary: Int
     
-}
-
-var optionalValue: Int?
-var forceUnwrapValue: Int!
-
-optionalValue = 5
-
-if var unwrapedOptionalValue = optionalValue {
-    unwrapedOptionalValue += 5
-    newArray2.append(unwrapedOptionalValue)
-}
-
-class SomeClassRoot: SomeProtocol {
-    var someValue: Int = 10
+    private let idOfProgrammer: Int
     
-    func sayHello() {
-        print("Hello world!")
+    init(programmingLanguage: String, salary: Int, idOfProgrammer: Int) {
+        self.programmingLanguage = programmingLanguage
+        self.salary = salary
+        self.idOfProgrammer = idOfProgrammer
+    }
+    
+    public func scream() { }
+}
+
+class RubyDeveloper: Programmer {
+    
+    override func scream() {
+        print("Ruby is the best!")
     }
 }
 
-protocol SomeProtocol {
-    var someValue: Int { get set }
+class CPlusPlusDeveloper: Programmer {
     
-    func sayHello()
-}
-
-class SomeClass: SomeClassRoot {
-    
-    fileprivate var name: String = String()
-    var age: Int
-    
-    init(age: Int) {
-        self.age = age
-    }
-    
-    override func sayHello() {
-        print("Hello world!")
-    }
-    
-    func calculateSum(with z: Double, and f: Double) -> Double {
-        return z + f
+    override func scream() {
+        print("C++ is the speed!")
     }
 }
 
-let someClassValue = SomeClass(age: 18)
+let rubyDeveloper = RubyDeveloper(programmingLanguage: "Ruby", salary: 135000, idOfProgrammer: 1)
+let cPlusPlusDeveloper = CPlusPlusDeveloper(programmingLanguage: "C++", salary: 95000, idOfProgrammer: 2)
 
-someClassValue.name = "Mark"
+rubyDeveloper.scream()
+cPlusPlusDeveloper.programmingLanguage
 
-someClassValue.sayHello()
 
-someClassValue.calculateSum(with: 32, and: 31)
-
-struct SomeStruct {
-    var field1: String = ""
-    var field2: String = ""
-    var field3: String
+//Binary Tree
+class Node {
     
-    init(value: String) {
-        field3 = value
+    var value: Int
+    var left: Node?
+    var right: Node?
+    init(value: Int) {
+        self.value = value
     }
 }
 
-var myStruct = SomeStruct(value: "32")
-
-let array3 = ["",1,2,3,4,5, "asd"] as [Any]
-
-let firstValue = array3.first as! Int
-
-if let firstValue = array3.first as? Int {
-    print()
+class BinaryTree {
+    
+    var root: Node
+    
+    init(rootValue: Int) {
+        self.root = Node(value: rootValue)
+    }
+    
+    func search(_ value: Int) -> Bool {
+        return preorderSearch(root, value: value)
+    }
+    
+    func printTree() -> String {
+        let result = preorderPrint(root, traverse: "")!
+        return String(result[..<result.index(before: result.endIndex)])
+    }
+    
+    func preorderSearch(_ start: Node?, value: Int) -> Bool {
+        if let start = start {
+            if start.value == value {
+                return true
+            } else {
+                return preorderSearch(start.left, value: value) || preorderSearch(start.right, value: value)
+            }
+        }
+        return false
+    }
+    
+    func preorderPrint(_ start: Node?, traverse: String) -> String? {
+        var result = traverse
+        if let start = start {
+            result += "\(start.value)-"
+            if let newValue = preorderPrint(start.left, traverse: result) {
+                result = newValue
+            }
+            if let newValue = preorderPrint(start.right, traverse: result) {
+                result = newValue
+            }
+        }
+        return result
+    }
 }
+
+let tree = BinaryTree(rootValue: 1)
+tree.root.left = Node(value: 2)
+tree.root.right = Node(value: 3)
+tree.root.left?.left = Node(value: 4)
+tree.root.left?.right = Node(value: 5)
+
+print(tree.search(4))
+print(tree.search(6))
+print(tree.printTree())
